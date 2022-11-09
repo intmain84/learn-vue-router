@@ -13,18 +13,18 @@
 </template>
 
 <script>
-import UserItem from '../users/UserItem.vue';
+import UserItem from "../users/UserItem.vue";
 
 export default {
   components: {
-    UserItem
+    UserItem,
   },
   data() {
     return {
-      teamName: 'Test',
+      teamName: "",
       members: [
-        { id: 'u1', fullName: 'Max Schwarz', role: 'Engineer' },
-        { id: 'u2', fullName: 'Max Schwarz', role: 'Engineer' },
+        { id: "u1", fullName: "Max Schwarz", role: "Engineer" },
+        { id: "u2", fullName: "Max Schwarz", role: "Engineer" },
       ],
     };
   },
