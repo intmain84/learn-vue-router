@@ -12,7 +12,6 @@ export default {
 
   computed: {
     link() {
-      console.log(this.id);
       return "/teams/" + this.id;
     },
   },
