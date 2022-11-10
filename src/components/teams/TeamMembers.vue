@@ -31,9 +31,9 @@ export default {
   },
 
   methods: {
-    setRoute(route) {
-      console.log(route);
-      const selectedTeam = this.teams.find((team) => team.id === this.teamId);
+    setRoute(id) {
+      const selectedTeam = this.teams.find((team) => team.id === id);
+
       const selectedMembers = selectedTeam.members;
       const members = [];
       for (const member in selectedMembers) {
@@ -49,14 +49,22 @@ export default {
 
   created() {
     this.setRoute(this.teamId);
+
+    this.$watch(
+      () => this.$route.params,
+      (toParams, previousParams) => {
+        previousParams + "asd";
+        this.setRoute(toParams.teamId);
+      }
+    );
   },
 
-  watch: {
-    teamId(newId) {
-      console.log(newId);
-      this.setRoute(newId);
-    },
-  },
+  // watch: {
+  //   teamId(newId) {
+  //     console.log(newId);
+  //     this.setRoute(newId);
+  //   },
+  // },
 };
 </script>
 
