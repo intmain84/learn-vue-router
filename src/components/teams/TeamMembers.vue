@@ -33,25 +33,31 @@ export default {
     };
   },
 
-  computed: {
-    // exactTeam() {
-    //   const allTeams = this.teams;
-    //   const pages = this.teams.length;
-    //   console.log(pages);
-    //   console.log(allTeams);
-    //   const team = [];
-    //   team.push();
-    //   return [];
-    // },
-  },
-
   methods: {
     getIds(allTeams = this.teams, currentId = this.teamId) {
-      const selectedTeamsId = allTeams
-        .map((team) => team.id)
-        .filter((id) => id !== currentId);
-      this.nearTeams = selectedTeamsId;
-      //console.log(selectedTeamsId);
+      const pages = allTeams.length;
+
+      const selectedTeamsId = allTeams.map((team) => team.id);
+      const currentPage = selectedTeamsId.indexOf(currentId) + 1;
+
+      //First page
+      if (currentPage === 1 && pages > 1) {
+        const id = selectedTeamsId.indexOf(currentId) + 1;
+
+        this.nearTeams = [selectedTeamsId[id]];
+      }
+
+      //Last page
+      if (currentPage === pages && currentPage !== 1) {
+        const id = selectedTeamsId.indexOf(currentId) - 1;
+        this.nearTeams = [selectedTeamsId[id]];
+      }
+
+      //Mid pages
+      if (currentPage !== pages && currentPage !== 1) {
+        const id = selectedTeamsId.indexOf(currentId);
+        this.nearTeams = [selectedTeamsId[id - 1], selectedTeamsId[id + 1]];
+      }
     },
 
     setRoute(id) {
