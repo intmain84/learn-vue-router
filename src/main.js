@@ -11,8 +11,11 @@ const app = createApp(App);
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: "/teams", component: TeamsList },
-    { path: "/", component: TeamsList, redirect: "/teams" },
+    //Можем редиректиться с корня на teams либо так:
+    // { path: "/", redirect: "/teams" },
+
+    //Либо с помощью алиаса:
+    { path: "/teams", component: TeamsList, alias: "/" },
     { path: "/users", component: UsersList },
     { path: "/", component: TeamsList, redirect: "/teams" },
     { path: "/teams/:teamId", component: TeamMembers, props: true },

@@ -9,7 +9,9 @@
         :role="member.role"
       ></user-item>
     </ul>
-    <router-link to="/teams/t1">Go to team 1</router-link>
+    <router-link v-for="team in nearTeams" :key="team" :to="team"
+      >Go to team {{ team.slice(-1) }}
+    </router-link>
   </section>
 </template>
 
@@ -27,10 +29,31 @@ export default {
     return {
       members: [],
       teamName: "",
+      nearTeams: [],
     };
   },
 
+  computed: {
+    // exactTeam() {
+    //   const allTeams = this.teams;
+    //   const pages = this.teams.length;
+    //   console.log(pages);
+    //   console.log(allTeams);
+    //   const team = [];
+    //   team.push();
+    //   return [];
+    // },
+  },
+
   methods: {
+    getIds(allTeams = this.teams, currentId = this.teamId) {
+      const selectedTeamsId = allTeams
+        .map((team) => team.id)
+        .filter((id) => id !== currentId);
+      this.nearTeams = selectedTeamsId;
+      //console.log(selectedTeamsId);
+    },
+
     setRoute(id) {
       const selectedTeam = this.teams.find((team) => team.id === id);
 
@@ -49,22 +72,26 @@ export default {
 
   created() {
     this.setRoute(this.teamId);
+    this.getIds();
 
-    this.$watch(
-      () => this.$route.params,
-      (toParams, previousParams) => {
-        previousParams + "asd";
-        this.setRoute(toParams.teamId);
-      }
-    );
+    //Один способ
+    // this.$watch(
+    //   () => this.$route.params,
+    //   (toParams, previousParams) => {
+    //     previousParams + "asd";
+    //     this.setRoute(toParams.teamId);
+    //   }
+    // );
   },
 
-  // watch: {
-  //   teamId(newId) {
-  //     console.log(newId);
-  //     this.setRoute(newId);
-  //   },
-  // },
+  watch: {
+    teamId(newId) {
+      this.getIds(undefined, newId);
+
+      //Второй способ
+      this.setRoute(newId);
+    },
+  },
 };
 </script>
 
