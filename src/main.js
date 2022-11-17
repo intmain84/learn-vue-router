@@ -15,10 +15,14 @@ const router = createRouter({
     // { path: "/", redirect: "/teams" },
 
     //Либо с помощью алиаса:
-    { path: "/teams", component: TeamsList, alias: "/" },
+    {
+      path: "/teams",
+      component: TeamsList,
+      alias: "/",
+      children: [{ path: ":teamId", component: TeamMembers, props: true }],
+    },
     { path: "/users", component: UsersList },
     { path: "/", component: TeamsList, redirect: "/teams" },
-    { path: "/teams/:teamId", component: TeamMembers, props: true },
   ],
   linkActiveClass: "active",
 });
