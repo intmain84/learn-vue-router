@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div v-if="error">{{ error }}</div>
   <section v-else>
     <h2>{{ teamName }}</h2>
@@ -14,8 +14,8 @@
       >Go to team {{ team.slice(-1) }}
     </router-link>
   </section>
-</template> -->
-<template>
+</template>
+<!-- <template>
   <section>
     <h2>{{ teamName }}</h2>
     <ul>
@@ -30,7 +30,7 @@
       >Go to team {{ team.slice(-1) }}
     </router-link>
   </section>
-</template>
+</template> -->
 
 <script>
 import UserItem from "../users/UserItem.vue";
@@ -44,6 +44,7 @@ export default {
 
   data() {
     return {
+      error: null,
       members: [],
       teamName: "",
       nearTeams: [],
@@ -81,7 +82,7 @@ export default {
       const selectedTeam = this.teams.find((team) => team.id === id);
 
       if (!selectedTeam) {
-        this.$router.push("/notFound");
+        this.error = "Team not found";
         return;
       }
 
