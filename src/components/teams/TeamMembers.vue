@@ -1,3 +1,20 @@
+<!-- <template>
+  <div v-if="error">{{ error }}</div>
+  <section v-else>
+    <h2>{{ teamName }}</h2>
+    <ul>
+      <user-item
+        v-for="member in members"
+        :key="member.id"
+        :name="member.fullName"
+        :role="member.role"
+      ></user-item>
+    </ul>
+    <router-link v-for="team in nearTeams" :key="team" :to="team"
+      >Go to team {{ team.slice(-1) }}
+    </router-link>
+  </section>
+</template> -->
 <template>
   <section>
     <h2>{{ teamName }}</h2>
@@ -62,6 +79,11 @@ export default {
 
     setRoute(id) {
       const selectedTeam = this.teams.find((team) => team.id === id);
+
+      if (!selectedTeam) {
+        this.$router.push("/notFound");
+        return;
+      }
 
       const selectedMembers = selectedTeam.members;
       const members = [];
