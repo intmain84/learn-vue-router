@@ -24,7 +24,12 @@ const router = createRouter({
       // children: [{ path: ":teamId", component: TeamMembers, props: true }],
     },
     { path: "/users", component: UsersList },
-    { path: "/teams/:teamId", component: TeamMembers, props: true },
+    {
+      name: "team-members",
+      path: "/teams/:teamId",
+      component: TeamMembers,
+      props: true,
+    },
     { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
   ],
   linkActiveClass: "active",
