@@ -6,6 +6,8 @@ import TeamsList from "./components/teams/TeamsList.vue";
 import UsersList from "./components/users/UsersList.vue";
 import TeamMembers from "./components/teams/TeamMembers.vue";
 import NotFound from "./components/UI/NotFound.vue";
+import UsersFooter from "./components/users/UserFooter.vue";
+import TeamsFooter from "./components/teams/TeamsFooter.vue";
 
 const app = createApp(App);
 
@@ -19,11 +21,11 @@ const router = createRouter({
 
     {
       path: "/teams",
-      component: TeamsList,
+      components: { default: TeamsList, footer: TeamsFooter },
       alias: "/",
       // children: [{ path: ":teamId", component: TeamMembers, props: true }],
     },
-    { path: "/users", component: UsersList },
+    { path: "/users", components: { default: UsersList, footer: UsersFooter } },
     {
       name: "team-members",
       path: "/teams/:teamId",
@@ -33,6 +35,14 @@ const router = createRouter({
     { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
   ],
   linkActiveClass: "active",
+  scrollBehavior(to, from, savedPosition) {
+    console.log(to, from, savedPosition);
+    if (savedPosition) {
+      return savedPosition;
+    }
+
+    return { left: 0, top: 0 };
+  },
 });
 
 app.use(router);
