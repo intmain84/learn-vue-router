@@ -9,8 +9,6 @@ import NotFound from "./components/UI/NotFound.vue";
 import UsersFooter from "./components/users/UserFooter.vue";
 import TeamsFooter from "./components/teams/TeamsFooter.vue";
 
-const app = createApp(App);
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -36,7 +34,6 @@ const router = createRouter({
   ],
   linkActiveClass: "active",
   scrollBehavior(to, from, savedPosition) {
-    console.log(to, from, savedPosition);
     if (savedPosition) {
       return savedPosition;
     }
@@ -44,6 +41,16 @@ const router = createRouter({
     return { left: 0, top: 0 };
   },
 });
+
+router.beforeEach(function (to, from, next) {
+  if (to.name === "team-members") {
+    next();
+  } else {
+    next({ name: "team-members", params: { teamId: "t2" } });
+  }
+});
+
+const app = createApp(App);
 
 app.use(router);
 
