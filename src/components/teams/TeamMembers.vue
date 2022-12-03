@@ -1,4 +1,5 @@
 <template>
+  <button @click="saveCHanges">Save</button>
   <div v-if="error">{{ error }}</div>
   <section v-else>
     <h2>{{ teamName }}</h2>
@@ -48,10 +49,24 @@ export default {
       members: [],
       teamName: "",
       nearTeams: [],
+      resSaved: false,
     };
   },
 
+  beforeRouteLeave(to, from, next) {
+    if (this.resSaved) {
+      next();
+    } else {
+      const data = confirm("Are u sure you want to left form?");
+      next(data);
+    }
+  },
+
   methods: {
+    saveCHanges() {
+      this.saveCHanges = true;
+    },
+
     getIds(allTeams = this.teams, currentId = this.teamId) {
       const pages = allTeams.length;
 
